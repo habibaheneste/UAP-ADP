@@ -1,0 +1,207 @@
+from termcolor import cprint
+import time
+import os
+import string
+
+# Fungsi untuk membersihkan layar
+def clrscr():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+# Animasi sederhana untuk menampilkan teks secara berurutan
+def print_with_delay(text):
+    for char in text:
+        print(char, end='', flush=True)
+        time.sleep(0.05)  # Delay setiap karakter agar terlihat seperti animasi
+    print()
+
+# Prosedur untuk login
+def login():
+    global nama, umur, data_pengguna
+    clrscr()
+    cprint('========================================', 'yellow')
+    cprint('|| SELAMAT DATANG DI APLIKASI KAMI!!! ||', 'yellow')
+    cprint('========================================', 'yellow')
+    print_with_delay('Silahkan Isi Data Diri Anda ^^')
+    nama = input_nama()
+    umur = input_umur()
+    data_pengguna = {'nama': nama, 'umur': umur}
+
+# Fungsi untuk meminta input nama dan menangani kesalahan
+def input_nama():
+    while True:
+        nama = input('NAMA : ')
+        if all(char in string.ascii_letters + ' ' for char in nama):
+            return nama
+        else:
+            print('Nama harus berisi hanya huruf dan spasi. Silakan coba lagi.')
+
+# Fungsi untuk meminta input umur dan menangani kesalahan
+def input_umur():
+    while True:
+        umur_input = input('UMUR : ')
+        try:
+            umur = int(umur_input)
+            return umur
+        except ValueError:
+            print('Umur harus berupa angka. Silakan coba lagi.')
+
+# Animasi untuk tampilan menu
+def animate_menu():
+    clrscr()
+    cprint('>>>>>>PILIHAN MENU<<<<<<', 'green')
+    time.sleep(0.5)
+    print()
+    cprint(' 1. JADWAL MENSTRUASI', 'cyan')
+    time.sleep(0.3)
+    cprint(' 2. KONSULTASI', 'cyan')
+    time.sleep(0.3)
+    cprint(' 3. CHECK UP', 'cyan')
+    time.sleep(0.3)
+    cprint(' 4. KELUAR', 'cyan')
+    time.sleep(0.3)
+
+# Prosedur untuk menu satu (Jadwal Datang Bulan)
+def satu():
+    while True:
+        clrscr()
+        cprint('>>>>>>>>Jadwal Datang Bulan<<<<<<<<', 'magenta')
+        time.sleep(0.5)
+        print()
+        try:
+            i = int(input('Tanggal hari pertama datang bulan : '))
+            j = int(input('Tanggal hari terakhir datang bulan : '))
+        except ValueError:
+            print('Masukkan harus berupa angka. Silakan coba lagi.')
+            input('Tekan Enter untuk melanjutkan.')
+            continue
+        
+        waktu_db = j - i + 1
+        
+        if 0 <= waktu_db <= 2:
+            print('Haid anda terjadi di masa pubertas.')
+        elif 2 < waktu_db <= 14:
+            print('Haid anda normal.')
+        elif waktu_db > 14:
+            print('Ada gangguan kesehatan !!!! Silahkan lakukan Check up dengan pilih menu 3')
+        
+        print(f'Lama Datang Bulan Anda: {waktu_db} Hari')
+        input('Tekan Enter untuk kembali ke menu')
+        break
+
+# Prosedur untuk menu dua (Konsultasi)
+def dua():
+    clrscr()
+    cprint('>>>>>>>>Konsultasi<<<<<<<<', 'magenta')
+    time.sleep(0.5)
+    print()
+    while True:
+        j0 = input('Apakah ini konsultasi pertama anda? (A/YA, B/TIDAK): ').upper()
+        if j0 in ['A', 'B']:
+            break
+        else:
+            print('Masukkan harus A atau B. Silakan coba lagi.')
+    
+    while True:
+        j1 = input('Apakah siklus haid anda normal? (A/YA, B/TIDAK): ').upper()
+        if j1 in ['A', 'B']:
+            break
+        else:
+            print('Masukkan harus A atau B. Silakan coba lagi.')
+    
+    while True:
+        j2 = input('Apakah anda mengalami nyeri selama haid? (A/YA, B/TIDAK): ').upper()
+        if j2 in ['A', 'B']:
+            break
+        else:
+            print('Masukkan harus A atau B. Silakan coba lagi.')
+    
+    while True:
+        j3 = input('Apakah anda mengalami masalah tidur? (A/YA, B/TIDAK): ').upper()
+        if j3 in ['A', 'B']:
+            break
+        else:
+            print('Masukkan harus A atau B. Silakan coba lagi.')
+    
+    while True:
+        j4 = input('Apakah kapasitas darah yang keluar berlebihan? (A/YA, B/TIDAK): ').upper()
+        if j4 in ['A', 'B']:
+            break
+        else:
+            print('Masukkan harus A atau B. Silakan coba lagi.')
+    
+    if j2 == 'A' and j3 == 'A' and j4 == 'A':
+        print('==== Lanjut ke menu 3 ====')
+    
+    input('Tekan Enter untuk kembali ke menu')
+
+# Prosedur untuk menu tiga (Check Up)
+def tiga():
+    clrscr()
+    cprint('>>>>>>>>Check Up<<<<<<<<', 'magenta')
+    time.sleep(0.5)
+    print()
+    print('PILIH GANGGUAN YANG ANDA ALAMI')
+    print(' 1. MENORRHAGIA (PENGELUARAN DARAH MENSTRUASI BERLEBIHAN)')
+    print(' 2. AMENOREA (TIDAK MENGALAMI HAID)')
+    print(' 3. POLYMENORRHEA (SIKLUS HAID TERLALU PENDEK)')
+    
+    while True:
+        f = input('PILIH: ')
+        if f in ['1', '2', '3']:
+            break
+        else:
+            print('Masukkan harus 1, 2, atau 3. Silakan coba lagi.')
+    
+    if f == '1':
+        print('ANDA MENGALAMI HAL INI?')
+        print('BERIKUT SOLUSI DARI GANGGUAN YANG ANDA ALAMI >< ')
+        print('Cara terbaik yang dapat anda lakukan adalah menjalani pemeriksaan secara rutin ke dokter.')
+        print('Atau mengonsumsi obat yang membantu mengurangi kehilangan darah menstruasi seperti obat antiinflamasi nonsteroid, contohmya ibuprofen atau naproxen sodium.')
+    elif f == '2':
+        print('ANDA MENGALAMI HAL INI?')
+        print('BERIKUT SOLUSI DARI GANGGUAN YANG ANDA ALAMI >< ')
+        print('penyebab dari amenorea sendiri adalah stress yang memicu perubahan fungsi hipotalamus pada otak.')
+        print('Cara terbaik yang dapat anda lakukan adalah hindari stress yang berkepanjangan dengan istirahat, jaga pola makan sehat.')
+    elif f == '3':
+        print('ANDA MENGALAMI HAL INI?')
+        print('BERIKUT SOLUSI DARI GANGGUAN YANG ANDA ALAMI >< ')
+        print('Cara terbaik yang dapat anda lakukan adalah konsultasi ke dokter kandungan dengan melakukan tes darah dan tes kehamilan.')
+    
+    input('Tekan Enter untuk kembali ke menu')
+
+# Fungsi untuk menu utama
+def menu():
+    while True:
+        animate_menu()
+        a = input('PILIH: ')
+        
+        if a == '1':
+            satu()
+        elif a == '2':
+            dua()
+        elif a == '3':
+            tiga()
+        elif a == '4':
+            cprint('Terimakasih Sudah Menggunakan Aplikasi kami ^^', 'yellow')
+            break
+        else:
+            print('Pilihan tidak valid, silahkan coba lagi.')
+        
+        while True:
+            ds = input('Ingin memilih menu lain?(y/t): ').lower()
+            if ds in ['y', 't']:
+                break
+            else:
+                print('Masukkan harus y atau t. Silakan coba lagi.')
+
+        if ds != 'y':
+            break
+
+# Program Utama
+nama = ''
+umur = 0
+data_pengguna = {}
+
+login()
+print(f"Selamat datang, {data_pengguna['nama']}! Anda berumur {data_pengguna['umur']} tahun.")
+menu()
